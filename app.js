@@ -89,8 +89,31 @@ app.route('/articles/:articleTitle')
         res.send(err);
       }
     })
-
 })
+
+.patch(function(req, res) {
+  Article.updateOne(
+    {title: req.params.articleTitle},
+    //'req.body' allows user to determine fields they would want to update
+    {$set:req.body},
+    function(err){
+      if (!err){
+        res.send("Successfully patch updated the article.");
+      } else {
+        res.sent(err);
+      }
+    })
+})
+
+.delete(function(req, res) {
+  Article.deleteOne({title: req.params.articleTitle}, function(err) {
+    if (!err) {
+      res.send("Successfully deleted the corresponding articles.");
+    } else {
+      res.send(err);
+    }
+  })
+});
 
 
 
